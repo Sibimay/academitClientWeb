@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Internet page 1: registration form</title>
+</head>
+<body>
+<form>
+    <div>
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Your first name"/>
+    </div>
+    <div>
+        <label for="userLogin">Login</label>
+        <input type="text" id="userLogin" name="userLogin" placeholder="Create a username"/>
+    </div>
+    <div>
+        <label for="userPassword">Password</label>
+        <input type="password" id="userPassword" name="userPassword" placeholder="Enter password"/>
+    </div>
+    <div>
+        <label>Are you over 18?</label>
+        <br>
+
+        <label for="age1">
+            <input type="radio" id="age1" name="age" value="1">
+            Yes
+        </label>
+
+        <label for="age2">
+            <input type="radio" id="age2" name="age" value="0">
+            No
+        </label>
+    </div>
+    <div>
+        <label>What languages do you know?</label>
+        <br>
+
+        <label for="language1">
+            <input type="checkbox" id="language1" name="language" value="en">
+            English
+        </label>
+
+        <label for="language2">
+            <input type="checkbox" id="language2" name="language" value="ru">
+            Russian
+        </label>
+
+        <label for="language3">
+            <input type="checkbox" id="language3" name="language" value="other">
+            Other
+        </label>
+    </div>
+    <div>
+        <label>Where are you from?</label>
+        <br>
+
+        <label>
+            Select the continent you are live
+            <select name="continent">
+                <option>Europe</option>
+                <option>Asia</option>
+                <option>Africa</option>
+                <option>North America</option>
+                <option>South America</option>
+                <option>Australia</option>
+            </select>
+        </label>
+        <h6>Hint: Look <a href="someInfo.html">here</a> and try to determine your continent by your country</h6>
+    </div>
+    <div>
+        <label>
+            What do you do? You can choose multiple
+            <br>
+            <select multiple name="activity">
+                <option>Work</option>
+                <option>Study</option>
+                <option>Travel</option>
+                <option>Nothing</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label for="aboutMyself">Tell us something about you</label>
+        <textarea id="aboutMyself" name="aboutMyself">
+I am
+        </textarea>
+    </div>
+    <div>
+        <label for="submit">Submit</label>
+        <input type="submit" id="submit" name="submit">
+    </div>
+</form>
+</body>
+</html>
