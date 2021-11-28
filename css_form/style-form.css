@@ -1,0 +1,63 @@
+.common {
+    max-width: 736px;
+    font-family: Helvetica, "Arial Rounded MT Bold", sans-serif;
+    padding-left: 17px;
+    margin: auto;
+    color: #7f7f7f;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.form {
+    background-color: #feeed6;
+    padding-bottom: 45px;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.common h1 {
+    font-weight: normal;
+    font-size: 28px;
+    margin-bottom: 3px;
+}
+
+.common label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.field-size {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.field-size:focus {
+    outline: none;
+}
+
+.common p {
+    margin-top: auto;
+    color: dimgrey;
+}
+
+.common textarea {
+    resize: vertical;
+}
+
+.send-button {
+    padding: 8px;
+    background-color: #378db2;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+}
+
+.send-button:hover {
+    background-color: #32728d
+}
