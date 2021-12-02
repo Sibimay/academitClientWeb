@@ -5,20 +5,22 @@
     padding-right: 10px;
     max-width: 715px;
     margin: 2px auto;
-    color: dimgray;
+    color: #696969FF;
     box-sizing: border-box;
 }
 
+p.paragraph, .description {
+    margin-block-end: 14px;
+}
+
 .title {
-    font-size: 38px;
-    font-variant: all-small-caps;
+    font-size: 24px;
     font-weight: normal;
-    line-height: 80%;
     margin-block-start: auto;
     margin-block-end: auto;
 }
 
-.former-price {
+.crossed-out {
     text-decoration: line-through;
 }
 

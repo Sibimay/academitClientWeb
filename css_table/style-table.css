@@ -4,7 +4,7 @@
     border-collapse: collapse;
     font-family: Helvetica, "Arial Unicode MS", sans-serif;
     margin: auto;
-    font-size: 18px;
+    font-size: 20px;
     text-align: left;
     margin-block-start: 30px;
     box-sizing: border-box;
@@ -20,7 +20,7 @@
 .table th {
     font-weight: normal;
     background-color: #3498db;
-    color: #ffffff;
+    color: #fff;
 }
 
 .table tbody tr:nth-child(odd) {

@@ -1,7 +1,7 @@
 .common {
     max-width: 736px;
     font-family: Helvetica, "Arial Rounded MT Bold", sans-serif;
-    padding-left: 17px;
+    padding-left: 20px;
     margin: auto;
     color: #7f7f7f;
     box-sizing: border-box;
@@ -40,7 +40,7 @@
 
 .common p {
     margin-top: auto;
-    color: dimgrey;
+    color: #696969FF;
 }
 
 .common textarea {
@@ -50,7 +50,7 @@
 .send-button {
     padding: 8px;
     background-color: #378db2;
-    color: white;
+    color: #FFF;
     font-weight: bold;
     border: none;
     cursor: pointer;
