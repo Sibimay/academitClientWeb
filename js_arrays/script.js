@@ -10,27 +10,28 @@
     var startSubArray = array.slice(0, 5);
     console.log("First 5 elements of array " + startSubArray.join(", "));
 
-    var endSubArray = array.slice(array.length - 5, array.length);
+    var endSubArray = array.slice(array.length - 5);
     console.log("Last 5 elements of array " + endSubArray.join(", "));
 
-    var sum = 0;
-    array.forEach(element => {
-        if (element % 2 === 0) {
-            sum += element;
-        }
+    var sum = array.filter(function (element) {
+        return element % 2 === 0;
+    }).reduce(function (previous, current) {
+        return previous + current;
     });
+
     console.log("Sum of even numbers of array = " + sum);
 })();
 
 (function () {
-    var array = [];
-    for (var i = 1; i <= 100; i++) {
-        array[i] = i;
-    }
+    var array = Array.from(Array(100).keys()).map(function (element) {
+        return element + 1;
+    });
 
-    var squaredEvenNumbers = array.filter(element => {
+    console.log(array.join(", "))
+
+    var squaredEvenNumbers = array.filter(function (element) {
         return element % 2 === 0;
-    }).map(element => {
+    }).map(function (element) {
         return element * element;
     });
 
