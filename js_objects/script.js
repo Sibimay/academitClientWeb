@@ -56,47 +56,44 @@
         }
     ];
 
-    (function () {
-        var maxCitiesCount = 0;
+    getCountriesWithMaxCitiesCount(countries).forEach(function (country) {
+        console.log("Countries with max cities count " + country.name);
+    });
 
-        if (countries !== []) {
-            maxCitiesCount = countries[0].cities.length;
-        }
-
-        maxCitiesCount = countries.reduce(function (previous, current) {
-            return Math.max(maxCitiesCount, current.cities.length);
-        });
-
-        console.log("Max cities count = " + maxCitiesCount)
-
-        var maxCitiesCountCountries = countries.filter(function (country) {
-            if (country.cities.length === maxCitiesCount) {
-                return country;
-            }
-        });
-
-        maxCitiesCountCountries.forEach(function (country) {
-            console.log("Country with max cities count " + country.name);
-        });
-    })();
-
-    (function () {
-        var countryPopulation = {};
-
-        countries.forEach(function (country) {
-            countryPopulation[country.name] = country.cities.reduce(function (previous, current) {
-                console.log(current.population);
-                console.log(previous.population);
-
-                if (typeof previous.population !== "undefined" && previous.population !== 0) {
-                    return previous.population + current.population;
-                }
-
-                console.log("Undef");
-                return current.population;
-            });
-        });
-
-        console.log(countryPopulation)
-    })()
+    console.log(getCountriesPopulation(countries));
 })();
+
+function getCountriesWithMaxCitiesCount(countries) {
+    var maxCitiesCount = 0;
+
+    if (countries.length !== 0) {
+        maxCitiesCount = countries[0].cities.length;
+    } else {
+        return [];
+    }
+
+    maxCitiesCount = countries.reduce(function (previous, current) {
+        return Math.max(maxCitiesCount, current.cities.length);
+    });
+
+    console.log("Max cities count = " + maxCitiesCount);
+
+    return countries.filter(function (country) {
+        return country.cities.length === maxCitiesCount;
+    });
+}
+
+function getCountriesPopulation(countries) {
+    var countryPopulation = {};
+
+    countries.forEach(function (country) {
+        var population = 0;
+        population = country.cities.reduce(function (accumulator, current) {
+            return accumulator + current.population;
+        }, population);
+
+        countryPopulation[country.name] = population;
+    });
+
+    return countryPopulation;
+}
