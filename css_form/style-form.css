@@ -12,12 +12,12 @@
     background-color: #feeed6;
     padding-bottom: 45px;
     padding-top: 15px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .common h1 {
     font-weight: normal;
-    font-size: 28px;
+    font-size: 30px;
     margin-bottom: 3px;
 }
 
@@ -54,8 +54,8 @@
     font-weight: bold;
     border: none;
     cursor: pointer;
-    position: absolute;
-    right: 20px;
+    position: relative;
+    left: 33.5em;
 }
 
 .send-button:hover {
