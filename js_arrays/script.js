@@ -13,19 +13,18 @@
     var endSubArray = array.slice(array.length - 5);
     console.log("Last 5 elements of array " + endSubArray.join(", "));
 
-    var sum = array.filter(function (element) {
-        return element % 2 === 0;
-    }).reduce(function (previous, current) {
-        return previous + current;
-    });
+    var sum = array.reduce(function (accumulator, currentElement) {
+        return currentElement % 2 === 0 ? accumulator + currentElement : accumulator
+    }, 0);
 
     console.log("Sum of even numbers of array = " + sum);
 })();
 
 (function () {
-    var array = Array.from(Array(100).keys()).map(function (element) {
-        return element + 1;
-    });
+    var array = [];
+    for (var i = 1; i <= 100; i++) {
+        array.push(i);
+    }
 
     console.log(array.join(", "))
 
