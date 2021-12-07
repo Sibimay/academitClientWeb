@@ -1,20 +1,19 @@
 .common {
     font-family: Helvetica, Arial, sans-serif;
     background-color: #feeed6;
-    padding-left: 10px;
-    padding-right: 10px;
-    max-width: 715px;
+    padding: 10px 14px;
+    max-width: 875px;
     margin: 2px auto;
     color: #696969FF;
     box-sizing: border-box;
 }
 
-p.paragraph, .description {
+.paragraph, .description {
     margin-block-end: 14px;
 }
 
 .title {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: normal;
     margin-block-start: auto;
     margin-block-end: auto;
@@ -27,15 +26,15 @@ p.paragraph, .description {
 .sub-text {
     color: #4294b7;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     padding-top: 5px;
     margin: auto;
 }
 
 .description {
-    font-size: 15px;
+    font-size: 20px;
     text-align: justify;
-    text-indent: 15px;
+    text-indent: 16px;
     line-height: 1.5;
     margin-top: 0.7em;
 }
