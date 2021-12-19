@@ -71,26 +71,26 @@
     });
 
     console.log(getCountriesPopulations(countries));
-})();
 
-function getCountriesWithMaxCitiesCount(countries) {
-    var maxCitiesCount = countries.reduce(function (accumulator, current) {
-        return Math.max(accumulator, current.cities.length);
-    }, 0);
-
-    return countries.filter(function (country) {
-        return country.cities.length === maxCitiesCount;
-    });
-}
-
-function getCountriesPopulations(countries) {
-    var countriesPopulations = {};
-
-    countries.forEach(function (country) {
-        countriesPopulations[country.name] = country.cities.reduce(function (countryPopulations, city) {
-            return countryPopulations + city.population;
+    function getCountriesWithMaxCitiesCount(countries) {
+        var maxCitiesCount = countries.reduce(function (accumulator, country) {
+            return Math.max(accumulator, country.cities.length);
         }, 0);
-    });
 
-    return countriesPopulations;
-}
+        return countries.filter(function (country) {
+            return country.cities.length === maxCitiesCount;
+        });
+    }
+
+    function getCountriesPopulations(countries) {
+        var countriesPopulations = {};
+
+        countries.forEach(function (country) {
+            countriesPopulations[country.name] = country.cities.reduce(function (countryPopulation, city) {
+                return countryPopulation + city.population;
+            }, 0);
+        });
+
+        return countriesPopulations;
+    }
+})();

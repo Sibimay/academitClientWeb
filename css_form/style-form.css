@@ -1,63 +1,82 @@
-.common {
-    max-width: 736px;
-    font-family: Helvetica, "Arial Rounded MT Bold", sans-serif;
-    padding-left: 20px;
-    margin: auto;
-    color: #7f7f7f;
+* {
     box-sizing: border-box;
-    position: relative;
+}
+
+.form_header h1 {
+    font-family: Arial, sans-serif;
+    font-size: 33px;
+    font-weight: lighter;
+    color: #676565;
+    margin: 6px 0;
+    border: #588db3;
 }
 
 .form {
-    background-color: #feeed6;
-    padding-bottom: 45px;
-    padding-top: 15px;
+    font-family: Arial, sans-serif;
     font-size: 16px;
-}
-
-.common h1 {
-    font-weight: normal;
-    font-size: 30px;
-    margin-bottom: 3px;
-}
-
-.common label {
     font-weight: bold;
-    margin-bottom: 5px;
-    display: inline-block;
+    background-color: #feeed6;
+    color: #676565;
+    padding-top: 18px;
+    padding-bottom: 11px;
 }
 
-.field-size {
-    width: 95%;
-    padding: 8px;
-    margin-bottom: 10px;
+.form_header h1, .form {
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.form_header, .form {
+    margin: 0 10px;
+    max-width: 844px;
+}
+
+.form input, .form textarea {
+    font-weight: normal;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 19px;
+    padding: 11px 10px;
     border: none;
 }
 
-.field-size:focus {
-    outline: none;
+.form input::placeholder, .form textarea::placeholder {
+    color: #999;
 }
 
-.common p {
-    margin-top: auto;
-    color: #696969FF;
-}
-
-.common textarea {
+.form textarea {
+    min-height: 20px;
+    height: 128px;
+    padding: 10px;
     resize: vertical;
 }
 
-.send-button {
-    padding: 8px;
-    background-color: #378db2;
-    color: #FFF;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    left: 33.5em;
+.form .callback {
+    font-weight: normal;
+    color: #737373;
 }
 
-.send-button:hover {
+.callback {
+    margin-bottom: 13px;
+}
+
+.send_button_container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 9px 0 4px;
+}
+
+.send_button {
+    font-weight: bold;
+    text-align: center;
+    width: 170px;
+    height: 36px;
+    background-color: #378db2;
+    color: #fff;
+    border: none;
+    margin: 0;
+}
+
+.send_button:hover {
     background-color: #32728d
 }

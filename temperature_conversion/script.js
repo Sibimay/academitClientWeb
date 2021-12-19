@@ -16,21 +16,23 @@
         var celsiusDegree = textLabel.value === "" ? NaN : Number(textLabel.value);
 
         if (isNaN(celsiusDegree)) {
+            conversionText.style.color = "#FF0000FF";
             conversionText.textContent = "Введите число градусов Цельсия для перевода в другие шкалы";
         } else {
-            conversionText.textContent = celsiusDegree + " градусов Цельсия = " + covertToKelvin(celsiusDegree) +
+            conversionText.style.color = "#000";
+            conversionText.textContent = celsiusDegree + " градусов Цельсия = " + convertToKelvin(celsiusDegree) +
                 " Кельвинов или " + convertToFahrenheit(celsiusDegree) + " Фаренгейт.";
         }
 
         temperatureDiv.appendChild(conversionText);
         textLabel.value = "";
     });
+
+    function convertToKelvin(celsiusDegree) {
+        return (celsiusDegree + 273.15).toFixed(2);
+    }
+
+    function convertToFahrenheit(celsiusDegree) {
+        return (celsiusDegree * 1.8 + 32).toFixed(2);
+    }
 })();
-
-function covertToKelvin(celsiusDegree) {
-    return celsiusDegree + 273.15;
-}
-
-function convertToFahrenheit(celsiusDegree) {
-    return celsiusDegree * 1.8 + 32;
-}
