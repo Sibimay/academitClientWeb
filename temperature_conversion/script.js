@@ -1,5 +1,5 @@
 (function () {
-    var temperatureDiv = document.getElementById("temperature-div")
+    var temperatureDiv = document.getElementById("temperature-div");
     var button = document.getElementById("convert-button");
     var textLabel = document.getElementById("temperature-celsius");
 

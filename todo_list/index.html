@@ -2,10 +2,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Todo list</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="initial">
+        <h1 class="header">TODO List</h1>
+
+        <div class="row mb-2">
+            <input type="text" id="input" class="col-5 mx-2 w-auto form-control">
+            <button type="button" id="addButton" class="col-5 w-auto btn btn-primary">Add</button>
+        </div>
+        <div id="list-div" class="row">
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
