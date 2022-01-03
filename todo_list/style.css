@@ -5,3 +5,7 @@
 .button:hover {
     background-color: #696969;
 }
+
+.red {
+    color: #f00;
+}

@@ -1,28 +1,28 @@
-(function () {
+document.addEventListener("DOMContentLoaded", function () {
     var inputField = document.getElementById("input");
-    var addButton = document.getElementById("addButton");
-    var listDiv = document.getElementById("list-div");
+    var addButton = document.getElementById("add-button");
+    var listDiv = document.getElementById("list");
 
     addButton.addEventListener("click", function () {
         if (isInputEmpty(listDiv, inputField)) {
             return;
         }
 
-        var list = getCreatedList();
+        var createdList = document.getElementById("todo-list");
         var listElement = document.createElement("li");
 
         // Создаем кнопки
-        var deleteButton = getCreatedButton("deleteButton", "Delete");
+        var deleteButton = getCreatedButton("delete-button", "Delete");
         deleteButton.classList.add("btn-danger");
 
-        var saveButton = getCreatedButton("saveButton", "Save");
+        var saveButton = getCreatedButton("save-button", "Save");
         saveButton.classList.add("btn-secondary");
         saveButton.style.display = "none";
 
-        var editButton = getCreatedButton("editButton", "Edit");
+        var editButton = getCreatedButton("edit-button", "Edit");
         editButton.classList.add("btn-secondary");
 
-        var cancelButton = getCreatedButton("cancelButton", "Cancel");
+        var cancelButton = getCreatedButton("cancel-button", "Cancel");
         cancelButton.classList.add("btn-secondary");
         cancelButton.style.display = "none";
 
@@ -31,14 +31,14 @@
         editInput.style.display = "none";
         editInput.type = "text";
         editInput.id = "input";
-        editInput.classList.add("col-5", "mx-2", "w-auto", "form-control");
+        editInput.classList.add("col-5", "mx-3", "w-auto", "form-control");
 
         var elementText = document.createElement("label");
 
         // Добавляем listener на кнопки
 
         deleteButton.addEventListener("click", function () {
-            list.removeChild(listElement);
+            createdList.removeChild(listElement);
         });
 
         editButton.addEventListener("click", function () {
@@ -46,8 +46,8 @@
             deleteErrorMessage(listDiv, inputField);
 
             // Выключаем все кнопки Delete и Edit
-            changeButtonsState("deleteButton", true);
-            changeButtonsState("editButton", true);
+            changeButtonsState(deleteButton.name, true);
+            changeButtonsState(editButton.name, true);
 
             // Отключаем возможность использования поля добавления значения в список
             changeElementsState([addButton, inputField], true);
@@ -60,17 +60,11 @@
 
             // Для элемента li показываем поле для ввода с уже имеющимся текстом
             editInput.value = elementText.textContent;
-
-            list.appendChild(listElement);
-            listElement.appendChild(editInput);
-            listElement.appendChild(saveButton);
-            listElement.appendChild(cancelButton);
-            listDiv.appendChild(list);
         });
 
         saveButton.addEventListener("click", function () {
             // Проверяем, что поле ввода не пустое
-            if (isInputEmpty(list, editInput)) {
+            if (isInputEmpty(listElement, editInput)) {
                 return;
             }
 
@@ -86,8 +80,8 @@
             elementText.textContent = editInput.value;
 
             // Включаем все кнопки Delete и Edit
-            changeButtonsState("deleteButton", false);
-            changeButtonsState("editButton", false);
+            changeButtonsState(deleteButton.name, false);
+            changeButtonsState(editButton.name, false);
 
             // Очищаем поле ввода
             editInput.value = "";
@@ -95,7 +89,7 @@
 
         cancelButton.addEventListener("click", function () {
             // Убираем сообщение об ошибке, если оно есть
-            deleteErrorMessage(list, editInput);
+            deleteErrorMessage(listElement, editInput);
 
             // Включаем возможность использования поля добавления значения в список
             changeElementsState([addButton, inputField], false);
@@ -107,8 +101,8 @@
             changeElementsVisibility([deleteButton, editButton, elementText], "unset");
 
             // Включаем все кнопки Delete и Edit
-            changeButtonsState("deleteButton", false);
-            changeButtonsState("editButton", false);
+            changeButtonsState(deleteButton.name, false);
+            changeButtonsState(editButton.name, false);
 
             // Очищаем поле ввода
             editInput.value = "";
@@ -120,27 +114,19 @@
         elementText.textContent = inputField.value;
         elementText.id = "text";
 
-        list.appendChild(listElement);
-        listElement.appendChild(elementText);
+        createdList.appendChild(listElement);
+
+        listElement.appendChild(elementText)
         listElement.appendChild(editButton);
         listElement.appendChild(deleteButton);
-        listDiv.appendChild(list);
+        listElement.appendChild(editInput);
+        listElement.appendChild(saveButton);
+        listElement.appendChild(cancelButton);
+
+        listDiv.appendChild(createdList);
 
         inputField.value = "";
     });
-
-    function getCreatedList() {
-        var listId = "todoList";
-        var list = document.getElementById(listId);
-
-        if (!list) {
-            list = document.createElement("ol");
-            list.id = "todoList";
-            list.classList.add("mx-5");
-        }
-
-        return list;
-    }
 
     function getCreatedButton(buttonName, buttonText) {
         var button = document.createElement("button");
@@ -156,7 +142,7 @@
 
     function isInputEmpty(parent, inputField) {
         if (inputField.value === "") {
-            setErrorMessage(inputField, parent);
+            setErrorMessage(parent, inputField);
 
             return true;
         }
@@ -166,15 +152,15 @@
         return false;
     }
 
-    function setErrorMessage(input, parent) {
-        if (!document.getElementById("errorText")) {
+    function setErrorMessage(parent, input) {
+        if (!document.getElementById("error-text")) {
             input.classList.add("is-invalid");
 
             var error = document.createElement("label");
 
             error.textContent = "Нельзя создать пустую заметку!";
-            error.style.color = "#f00";
-            error.id = "errorText";
+            error.id = "error-text";
+            error.classList.add("col-8", "mb-2", "red");
 
             if (parent !== listDiv) {
                 parent.appendChild(error);
@@ -185,8 +171,8 @@
     }
 
     function deleteErrorMessage(parent, inputField) {
-        if (document.getElementById("errorText")) {
-            parent.removeChild(document.getElementById("errorText"));
+        if (document.getElementById("error-text")) {
+            parent.removeChild(document.getElementById("error-text"));
             inputField.classList.remove("is-invalid");
         }
     }
@@ -206,4 +192,4 @@
             element.disabled = disabled;
         });
     }
-})();
+});

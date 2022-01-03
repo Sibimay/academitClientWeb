@@ -1,30 +1,23 @@
-(function () {
-    var temperatureDiv = document.getElementById("temperature-div");
-    var button = document.getElementById("convert-button");
+document.addEventListener("DOMContentLoaded", function () {
+    var convertButton = document.getElementById("convert-button");
     var textLabel = document.getElementById("temperature-celsius");
 
-    button.addEventListener("click", function () {
-        var conversionText = document.getElementById("conversion-text")
-
-        if (conversionText) {
-            temperatureDiv.removeChild(conversionText);
-        } else {
-            conversionText = document.createElement("p");
-            conversionText.id = "conversion-text";
-        }
-
+    convertButton.addEventListener("click", function () {
+        var conversionText = document.getElementById("conversion-text");
+        var conversionError = document.getElementById("conversion-error");
         var celsiusDegree = textLabel.value === "" ? NaN : Number(textLabel.value);
 
         if (isNaN(celsiusDegree)) {
-            conversionText.style.color = "#FF0000FF";
-            conversionText.textContent = "Введите число градусов Цельсия для перевода в другие шкалы";
+            conversionText.style.display = "none";
+            conversionError.style.display = "unset";
         } else {
-            conversionText.style.color = "#000";
+            conversionError.style.display = "none";
+            conversionText.style.display = "unset";
+
             conversionText.textContent = celsiusDegree + " градусов Цельсия = " + convertToKelvin(celsiusDegree) +
                 " Кельвинов или " + convertToFahrenheit(celsiusDegree) + " Фаренгейт.";
         }
 
-        temperatureDiv.appendChild(conversionText);
         textLabel.value = "";
     });
 
@@ -35,4 +28,4 @@
     function convertToFahrenheit(celsiusDegree) {
         return (celsiusDegree * 1.8 + 32).toFixed(2);
     }
-})();
+});
