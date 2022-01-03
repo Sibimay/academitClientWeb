@@ -4,57 +4,62 @@
     var listDiv = document.getElementById("list-div");
 
     addButton.addEventListener("click", function () {
-        if (inputField.value === "") {
-            setErrorMessage(inputField);
-
-            return
-        } else {
-            if (document.getElementById("errorText")) {
-                listDiv.removeChild(document.getElementById("errorText"));
-                inputField.classList.remove("is-invalid");
-            }
+        if (isInputEmpty(listDiv, inputField)) {
+            return;
         }
 
-        var list = createList();
-
+        var list = getCreatedList();
         var listElement = document.createElement("li");
-        var elementText = document.createElement("label");
+
+        // Создаем кнопки
+        var deleteButton = getCreatedButton("deleteButton", "Delete");
+        deleteButton.classList.add("btn-danger");
+
+        var saveButton = getCreatedButton("saveButton", "Save");
+        saveButton.classList.add("btn-secondary");
+        saveButton.style.display = "none";
+
+        var editButton = getCreatedButton("editButton", "Edit");
+        editButton.classList.add("btn-secondary");
+
+        var cancelButton = getCreatedButton("cancelButton", "Cancel");
+        cancelButton.classList.add("btn-secondary");
+        cancelButton.style.display = "none";
+
+        //Создаем input и label
         var editInput = document.createElement("input");
         editInput.style.display = "none";
+        editInput.type = "text";
+        editInput.id = "input";
+        editInput.classList.add("col-5", "mx-2", "w-auto", "form-control");
 
-        var deleteButton = createButton("deleteButton", "Delete");
-        deleteButton.classList.add("btn-danger");
+        var elementText = document.createElement("label");
+
+        // Добавляем listener на кнопки
+
         deleteButton.addEventListener("click", function () {
             list.removeChild(listElement);
         });
 
-        var editButton = createButton("editButton", "Edit");
-        editButton.classList.add("btn-secondary");
         editButton.addEventListener("click", function () {
-            document.getElementsByName("deleteButton")
-                .forEach(function (button) {
-                    button.disabled = true;
-                });
+            // Убираем сообщение об ошибке, если оно есть
+            deleteErrorMessage(listDiv, inputField);
 
-            document.getElementsByName("editButton")
-                .forEach(function (button) {
-                    button.disabled = true;
-                });
+            // Выключаем все кнопки Delete и Edit
+            changeButtonsState("deleteButton", true);
+            changeButtonsState("editButton", true);
 
-            deleteButton.style.display = "none";
-            editButton.style.display = "none";
-            elementText.style.display = "none";
+            // Отключаем возможность использования поля добавления значения в список
+            changeElementsState([addButton, inputField], true);
 
-            editInput.style.display = "unset";
-            editInput.type = "text";
-            editInput.id = "input";
-            editInput.classList.add("col-5", "mx-2", "w-auto", "form-control");
+            // Для элемента li скрываем введенный текст и кнопки delete и edit
+            changeElementsVisibility([deleteButton, editButton, elementText], "none");
+
+            // Для элемента li показываем кнопки Save и Cancel
+            changeElementsVisibility([saveButton, cancelButton, editInput], "unset");
+
+            // Для элемента li показываем поле для ввода с уже имеющимся текстом
             editInput.value = elementText.textContent;
-
-            saveButton.style.display = "unset";
-            cancelButton.style.display = "unset";
-            addButton.disabled = true;
-            inputField.disabled = true;
 
             list.appendChild(listElement);
             listElement.appendChild(editInput);
@@ -63,68 +68,49 @@
             listDiv.appendChild(list);
         });
 
-        var saveButton = createButton("saveButton", "Save");
-        saveButton.classList.add("btn-secondary");
-        saveButton.style.display = "none";
         saveButton.addEventListener("click", function () {
-            if (editInput.value === "") {
-                setErrorMessage(editInput, list);
-
-                return
-            } else {
-                if (document.getElementById("errorText")) {
-                    list.removeChild(document.getElementById("errorText"));
-                    editInput.classList.remove("is-invalid");
-                }
+            // Проверяем, что поле ввода не пустое
+            if (isInputEmpty(list, editInput)) {
+                return;
             }
+
+            // Включаем возможность использования поля добавления значения в список
+            changeElementsState([addButton, inputField], false);
+
+            // Для элемента li скрываем поле ввода, кнопки save и cancel
+            changeElementsVisibility([editInput, saveButton, cancelButton], "none");
+
+            // Для элемента li показываем введенный текст и кнопки edit и delete
+            changeElementsVisibility([deleteButton, editButton, elementText], "unset");
 
             elementText.textContent = editInput.value;
 
-            editInput.style.display = "none";
-            saveButton.style.display = "none";
-            cancelButton.style.display = "none";
-            addButton.disabled = false;
-            inputField.disabled = false;
+            // Включаем все кнопки Delete и Edit
+            changeButtonsState("deleteButton", false);
+            changeButtonsState("editButton", false);
 
-            deleteButton.style.display = "unset";
-            editButton.style.display = "unset";
-            elementText.style.display = "unset";
-            document.getElementsByName("deleteButton")
-                .forEach(function (button) {
-                    button.disabled = false;
-                });
-
-            document.getElementsByName("editButton")
-                .forEach(function (button) {
-                    button.disabled = false;
-                });
-
+            // Очищаем поле ввода
             editInput.value = "";
         });
 
-        var cancelButton = createButton("cancelButton", "Cancel");
-        cancelButton.classList.add("btn-secondary");
-        cancelButton.style.display = "none";
         cancelButton.addEventListener("click", function () {
-            editInput.style.display = "none";
-            saveButton.style.display = "none";
-            cancelButton.style.display = "none";
+            // Убираем сообщение об ошибке, если оно есть
+            deleteErrorMessage(list, editInput);
 
-            deleteButton.style.display = "unset";
-            editButton.style.display = "unset";
-            elementText.style.display = "unset";
-            addButton.disabled = false;
-            inputField.disabled = false;
-            document.getElementsByName("deleteButton")
-                .forEach(function (button) {
-                    button.disabled = false;
-                });
+            // Включаем возможность использования поля добавления значения в список
+            changeElementsState([addButton, inputField], false);
 
-            document.getElementsByName("editButton")
-                .forEach(function (button) {
-                    button.disabled = false;
-                });
+            // Для элемента li скрываем поле ввода, кнопки save и cancel
+            changeElementsVisibility([editInput, saveButton, cancelButton], "none");
 
+            // Для элемента li показываем введенный текст и кнопки edit и delete
+            changeElementsVisibility([deleteButton, editButton, elementText], "unset");
+
+            // Включаем все кнопки Delete и Edit
+            changeButtonsState("deleteButton", false);
+            changeButtonsState("editButton", false);
+
+            // Очищаем поле ввода
             editInput.value = "";
         });
 
@@ -143,7 +129,7 @@
         inputField.value = "";
     });
 
-    function createList() {
+    function getCreatedList() {
         var listId = "todoList";
         var list = document.getElementById(listId);
 
@@ -156,7 +142,7 @@
         return list;
     }
 
-    function createButton(buttonName, buttonText) {
+    function getCreatedButton(buttonName, buttonText) {
         var button = document.createElement("button");
 
         button.textContent = buttonText;
@@ -168,7 +154,19 @@
         return button;
     }
 
-    function setErrorMessage(input, list) {
+    function isInputEmpty(parent, inputField) {
+        if (inputField.value === "") {
+            setErrorMessage(inputField, parent);
+
+            return true;
+        }
+
+        deleteErrorMessage(parent, inputField);
+
+        return false;
+    }
+
+    function setErrorMessage(input, parent) {
         if (!document.getElementById("errorText")) {
             input.classList.add("is-invalid");
 
@@ -178,11 +176,34 @@
             error.style.color = "#f00";
             error.id = "errorText";
 
-            if (list !== undefined) {
-                list.appendChild(error);
+            if (parent !== listDiv) {
+                parent.appendChild(error);
             } else {
-                listDiv.appendChild(error);
+                parent.prepend(error);
             }
         }
+    }
+
+    function deleteErrorMessage(parent, inputField) {
+        if (document.getElementById("errorText")) {
+            parent.removeChild(document.getElementById("errorText"));
+            inputField.classList.remove("is-invalid");
+        }
+    }
+
+    function changeElementsVisibility(elements, display) {
+        elements.forEach(function (element) {
+            element.style.display = display;
+        });
+    }
+
+    function changeButtonsState(buttonsName, disabled) {
+        changeElementsState(document.getElementsByName(buttonsName), disabled);
+    }
+
+    function changeElementsState(elements, disabled) {
+        elements.forEach(function (element) {
+            element.disabled = disabled;
+        });
     }
 })();
