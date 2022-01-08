@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var inputField = document.getElementById("input");
     var addButton = document.getElementById("add-button");
     var listDiv = document.getElementById("list");
+    var errorMessageGlobal = document.getElementById("invalid-feedback");
 
     addButton.addEventListener("click", function () {
         if (isInputEmpty(listDiv, inputField)) {
@@ -11,18 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
         var createdList = document.getElementById("todo-list");
         var listElement = document.createElement("li");
 
+        var note = document.createElement("div");
+
         // Создаем кнопки
-        var deleteButton = getCreatedButton("delete-button", "Delete");
+        var deleteButton = createButton("delete-button", "Delete");
         deleteButton.classList.add("btn-danger");
 
-        var saveButton = getCreatedButton("save-button", "Save");
-        saveButton.classList.add("btn-secondary");
+        var saveButton = createButton("save-button", "Save");
+        saveButton.classList.add("btn-success");
         saveButton.style.display = "none";
 
-        var editButton = getCreatedButton("edit-button", "Edit");
+        var editButton = createButton("edit-button", "Edit");
         editButton.classList.add("btn-secondary");
 
-        var cancelButton = getCreatedButton("cancel-button", "Cancel");
+        var cancelButton = createButton("cancel-button", "Cancel");
         cancelButton.classList.add("btn-secondary");
         cancelButton.style.display = "none";
 
@@ -31,9 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
         editInput.style.display = "none";
         editInput.type = "text";
         editInput.id = "input";
-        editInput.classList.add("col-5", "mx-3", "w-auto", "form-control");
+        editInput.classList.add("mx-3", "w-auto", "form-control");
 
         var elementText = document.createElement("label");
+        var invalidFeedBackListElement = document.createElement("div");
+        invalidFeedBackListElement.style.display = "none";
+        invalidFeedBackListElement.id = "invalid-feedback-li";
+        invalidFeedBackListElement.classList.add("red", "mx-3", "invalid-feedback-li");
+        invalidFeedBackListElement.textContent = "Error! Can't create empty note";
 
         // Добавляем listener на кнопки
 
@@ -46,11 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteErrorMessage(listDiv, inputField);
 
             // Выключаем все кнопки Delete и Edit
-            changeButtonsState(deleteButton.name, true);
-            changeButtonsState(editButton.name, true);
-
-            // Отключаем возможность использования поля добавления значения в список
-            changeElementsState([addButton, inputField], true);
+            changeButtonsDisabled(deleteButton.name, true);
+            changeButtonsDisabled(editButton.name, true);
 
             // Для элемента li скрываем введенный текст и кнопки delete и edit
             changeElementsVisibility([deleteButton, editButton, elementText], "none");
@@ -68,9 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Включаем возможность использования поля добавления значения в список
-            changeElementsState([addButton, inputField], false);
-
             // Для элемента li скрываем поле ввода, кнопки save и cancel
             changeElementsVisibility([editInput, saveButton, cancelButton], "none");
 
@@ -80,8 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
             elementText.textContent = editInput.value;
 
             // Включаем все кнопки Delete и Edit
-            changeButtonsState(deleteButton.name, false);
-            changeButtonsState(editButton.name, false);
+            changeButtonsDisabled(deleteButton.name, false);
+            changeButtonsDisabled(editButton.name, false);
 
             // Очищаем поле ввода
             editInput.value = "";
@@ -91,9 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // Убираем сообщение об ошибке, если оно есть
             deleteErrorMessage(listElement, editInput);
 
-            // Включаем возможность использования поля добавления значения в список
-            changeElementsState([addButton, inputField], false);
-
             // Для элемента li скрываем поле ввода, кнопки save и cancel
             changeElementsVisibility([editInput, saveButton, cancelButton], "none");
 
@@ -101,38 +100,40 @@ document.addEventListener("DOMContentLoaded", function () {
             changeElementsVisibility([deleteButton, editButton, elementText], "unset");
 
             // Включаем все кнопки Delete и Edit
-            changeButtonsState(deleteButton.name, false);
-            changeButtonsState(editButton.name, false);
+            changeButtonsDisabled(deleteButton.name, false);
+            changeButtonsDisabled(editButton.name, false);
 
             // Очищаем поле ввода
             editInput.value = "";
         });
 
-        listElement.classList.add("col-8", "mb-1");
+        listElement.classList.add("col-xs-8", "mb-1");
         listElement.id = "item";
 
         elementText.textContent = inputField.value;
         elementText.id = "text";
 
         createdList.appendChild(listElement);
+        listElement.appendChild(note);
+        listElement.appendChild(invalidFeedBackListElement);
 
-        listElement.appendChild(elementText)
-        listElement.appendChild(editButton);
-        listElement.appendChild(deleteButton);
-        listElement.appendChild(editInput);
-        listElement.appendChild(saveButton);
-        listElement.appendChild(cancelButton);
+        note.appendChild(elementText)
+        note.appendChild(editButton);
+        note.appendChild(deleteButton);
+        note.appendChild(editInput);
+        note.appendChild(saveButton);
+        note.appendChild(cancelButton);
 
         listDiv.appendChild(createdList);
 
         inputField.value = "";
     });
 
-    function getCreatedButton(buttonName, buttonText) {
+    function createButton(buttonName, buttonText) {
         var button = document.createElement("button");
 
         button.textContent = buttonText;
-        button.classList.add("col", "btn", "ms-2", "btn-sm", "mx-auto");
+        button.classList.add("btn", "ms-2", "btn-sm", "mx-auto");
         button.type = "button";
         button.id = buttonName;
         button.name = buttonName;
@@ -141,9 +142,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function isInputEmpty(parent, inputField) {
-        if (inputField.value === "") {
+        if (inputField.value.trim().length === 0) {
             setErrorMessage(parent, inputField);
 
+            inputField.value = "";
             return true;
         }
 
@@ -153,28 +155,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function setErrorMessage(parent, input) {
-        if (!document.getElementById("error-text")) {
-            input.classList.add("is-invalid");
+        input.classList.add("is-invalid");
 
-            var error = document.createElement("label");
-
-            error.textContent = "Нельзя создать пустую заметку!";
-            error.id = "error-text";
-            error.classList.add("col-8", "mb-2", "red");
-
-            if (parent !== listDiv) {
-                parent.appendChild(error);
-            } else {
-                parent.prepend(error);
+        if (parent !== listDiv) {
+            for (var i = 0; i < parent.children.length; i++) {
+                if (parent.children[i].id === "invalid-feedback-li") {
+                    parent.children[i].style.display = "unset";
+                    break;
+                }
             }
+        } else {
+            errorMessageGlobal.style.display = "unset";
         }
     }
 
     function deleteErrorMessage(parent, inputField) {
-        if (document.getElementById("error-text")) {
-            parent.removeChild(document.getElementById("error-text"));
-            inputField.classList.remove("is-invalid");
+        if (parent !== listDiv) {
+            for (var i = 0; i < parent.children.length; i++) {
+                if (parent.children[i].id === "invalid-feedback-li") {
+                    parent.children[i].style.display = "none";
+                    break;
+                }
+            }
+        } else {
+            errorMessageGlobal.style.display = "none";
         }
+
+        inputField.classList.remove("is-invalid");
     }
 
     function changeElementsVisibility(elements, display) {
@@ -183,11 +190,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function changeButtonsState(buttonsName, disabled) {
-        changeElementsState(document.getElementsByName(buttonsName), disabled);
+    function changeButtonsDisabled(buttonsName, disabled) {
+        changeElementsDisabled(document.getElementsByName(buttonsName), disabled);
     }
 
-    function changeElementsState(elements, disabled) {
+    function changeElementsDisabled(elements, disabled) {
         elements.forEach(function (element) {
             element.disabled = disabled;
         });

@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Todo list jQuery</title>
+    <title>To-do list v2.0</title>
+    <link rel="stylesheet" href="normalize.css"/>
+    <link rel="stylesheet" href="style.css"/>
     <script defer src="node_modules/jquery/dist/jquery.js"></script>
-    <script defer src="node_modules/jquery-ui-dist/jquery-ui.js"></script>
     <script defer src="script.js"></script>
-    <link href="node_modules/jquery-ui-dist/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
+<div class="form_header">
+    <h2>Todo list</h2>
+</div>
 
+<div class="todo-list">
+    <form class="new-note-form">
+        <label>
+            <input id="note" class="note" type="text" placeholder="Write your note here">
+        </label>
+        <button id="add-button" class="list-button add-button" type="button">add</button>
+        <p class="error-message" style="display: none;">error: new note cannot be empty</p>
+    </form>
+    <ul id="todo-list-content" class="todo-list-content"></ul>
+</div>
 </body>
 </html>
